@@ -8,7 +8,10 @@ import type { Product } from '@/types'
 
 export default function Products() {
   const [category, setCategory] = useState('All')
-  const { products, loading, add, edit, refetch } = useProducts(category)
+  const [search, setSearch] = useState('')
+  const [stockFilter, setStockFilter] = useState('All Statuses')
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const { products, loading, add, edit, refetch } = useProducts()
   const { showToast } = useToast()
   const [modalOpen, setModalOpen] = useState(false)
   const [editModalOpen, setEditModalOpen] = useState(false)
@@ -18,16 +21,17 @@ export default function Products() {
 
   const categories = [...new Set(products.map(p => p.category).filter(Boolean))]
 
-  const statusBadge = (status: string) => {
-    const isInStock = status === 'In Stock'
-    const isLowStock = status === 'Low Stock'
-    const color = isInStock ? 'success' : isLowStock ? 'warning' : 'error'
-    return (
-      <div className={`absolute top-4 right-4 bg-${color}/10 backdrop-blur-md text-${color} px-3 py-1 rounded-full text-label-sm font-bold flex items-center gap-1`}>
-        <span className={`w-1.5 h-1.5 bg-${color} rounded-full`} />
-        {status}
-      </div>
-    )
+  const filteredProducts = products.filter(p => {
+    if (category !== 'All' && p.category !== category) return false
+    if (stockFilter !== 'All Statuses' && p.status !== stockFilter) return false
+    if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.sku.toLowerCase().includes(search.toLowerCase())) return false
+    return true
+  })
+
+  const stockStatus = (product: Product) => {
+    if (product.stock === 0) return { label: 'Out of Stock', color: 'error' }
+    if (product.stock <= 20) return { label: 'Low Stock', color: 'warning' }
+    return { label: 'In Stock', color: 'success' }
   }
 
   async function handleCreate(e: React.FormEvent) {
@@ -58,18 +62,6 @@ export default function Products() {
       showToast((err as Error).message, 'error')
     } finally {
       setSubmitting(false)
-    }
-  }
-
-  async function handleStockUpdate(id: string, delta: number) {
-    const product = products.find(p => p.id === id)
-    if (!product) return
-    const newStock = Math.max(0, product.stock + delta)
-    try {
-      await edit(id, { stock: newStock } as any)
-      showToast(`Stock updated to ${newStock}`, 'success')
-    } catch (err) {
-      showToast((err as Error).message, 'error')
     }
   }
 
@@ -116,55 +108,133 @@ export default function Products() {
             <button key={cat} onClick={() => setCategory(cat!)} className={`px-4 py-2 rounded-full text-label-md font-medium transition-colors ${category === cat ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'}`}>{cat}</button>
           ))}
         </div>
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+            <input className="w-56 bg-surface-container-low border border-outline-variant/10 rounded-full py-2 pl-9 pr-4 text-body-md focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search products..." type="text" value={search} onChange={e => setSearch(e.target.value)} />
+          </div>
+          <select className="bg-surface-container-low border border-outline-variant/10 rounded-lg py-2 px-3 text-label-md font-medium focus:ring-primary focus:border-primary" value={stockFilter} onChange={e => setStockFilter(e.target.value)}>
+            <option>All Statuses</option>
+            <option>In Stock</option>
+            <option>Low Stock</option>
+            <option>Out of Stock</option>
+          </select>
+          <div className="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
+            <button onClick={() => setViewMode('grid')} className={`px-3 py-1.5 rounded-md text-label-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm font-semibold' : 'text-outline hover:text-on-surface'}`}>
+              <span className="material-symbols-outlined text-[18px]">grid_view</span>
+            </button>
+            <button onClick={() => setViewMode('list')} className={`px-3 py-1.5 rounded-md text-label-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm font-semibold' : 'text-outline hover:text-on-surface'}`}>
+              <span className="material-symbols-outlined text-[18px]">view_list</span>
+            </button>
+          </div>
+        </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-        {products.map((product) => (
-          <div key={product.id} className="glass-card rounded-2xl overflow-hidden group transition-all hover:translate-y-[-4px]">
-            <div className="relative h-64 w-full bg-surface-container-low">
-              <div className="w-full h-full bg-gradient-to-br from-primary/5 to-surface-container-low" />
-              {statusBadge(product.status)}
+
+      {viewMode === 'grid' ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {filteredProducts.map((product) => {
+            const ss = stockStatus(product)
+            return (
+              <div key={product.id} className="glass-card rounded-2xl overflow-hidden group transition-all hover:translate-y-[-4px]">
+                <div className="relative h-64 w-full bg-surface-container-low">
+                  <div className="w-full h-full bg-gradient-to-br from-primary/5 to-surface-container-low" />
+                  <div className={`absolute top-4 right-4 bg-${ss.color}/10 backdrop-blur-md text-${ss.color} px-3 py-1 rounded-full text-label-sm font-bold flex items-center gap-1`}>
+                    <span className={`w-1.5 h-1.5 bg-${ss.color} rounded-full`} />
+                    {ss.label}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-headline-md text-headline-md text-ink-primary">{product.name}</h3>
+                    <p className="font-headline-md text-headline-md font-bold text-primary">${Number(product.price).toFixed(2)}</p>
+                  </div>
+                  <p className="text-label-sm text-on-surface-variant uppercase tracking-wider mb-6">SKU: {product.sku}</p>
+                  <div className="ai-glow p-4 rounded-xl mb-6 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center">
+                        <span className="material-symbols-outlined text-primary text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+                      </div>
+                      <div>
+                        <p className="text-label-sm font-label-sm text-primary uppercase">AI Prediction</p>
+                        <p className="text-body-md font-semibold text-on-surface">Demand: {product.demand_label} ({product.demand_prediction}%)</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-label-sm text-on-surface-variant">Next Ship: {product.next_shipment ? new Date(product.next_shipment).toLocaleDateString() : 'N/A'}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+                    <div>
+                      <p className="text-label-sm text-on-surface-variant">Available Stock</p>
+                      <p className={`text-body-lg font-bold ${ss.label === 'Low Stock' ? 'text-warning' : ss.label === 'Out of Stock' ? 'text-error' : 'text-on-surface'}`}>
+                        {product.stock.toLocaleString()} Units
+                      </p>
+                    </div>
+                    <button onClick={() => openEditModal(product)} className="px-4 py-2 bg-surface-secondary text-primary rounded-lg font-label-md hover:bg-primary-fixed-dim transition-colors">Manage</button>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+          <div className="glass-card rounded-2xl p-6 border-dashed border-2 border-outline-variant/40 flex flex-col items-center justify-center text-center gap-4 group cursor-pointer hover:border-primary/40 transition-colors" onClick={() => setModalOpen(true)}>
+            <div className="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+              <span className="material-symbols-outlined text-[32px]">add_circle</span>
             </div>
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-headline-md text-headline-md text-ink-primary">{product.name}</h3>
-                <p className="font-headline-md text-headline-md font-bold text-primary">${Number(product.price).toFixed(2)}</p>
-              </div>
-              <p className="text-label-sm text-on-surface-variant uppercase tracking-wider mb-6">SKU: {product.sku}</p>
-              <div className="ai-glow p-4 rounded-xl mb-6 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center">
-                    <span className="material-symbols-outlined text-primary text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
-                  </div>
-                  <div>
-                    <p className="text-label-sm font-label-sm text-primary uppercase">AI Prediction</p>
-                    <p className="text-body-md font-semibold text-on-surface">Demand: {product.demand_label} ({product.demand_prediction}%)</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="text-label-sm text-on-surface-variant">Next Ship: {product.next_shipment ? new Date(product.next_shipment).toLocaleDateString() : 'N/A'}</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between pt-4 border-t border-outline-variant/10">
-                <div>
-                  <p className="text-label-sm text-on-surface-variant">Available Stock</p>
-                  <p className={`text-body-lg font-bold ${product.status === 'Low Stock' ? 'text-warning' : 'text-on-surface'}`}>
-                    {product.stock.toLocaleString()} Units
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={() => handleStockUpdate(product.id, -1)} className="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:text-error transition-colors">
-                    <span className="material-symbols-outlined text-[16px]">remove</span>
-                  </button>
-                  <button onClick={() => handleStockUpdate(product.id, 1)} className="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
-                    <span className="material-symbols-outlined text-[16px]">add</span>
-                  </button>
-                  <button onClick={() => openEditModal(product)} className="px-4 py-2 bg-surface-secondary text-primary rounded-lg font-label-md hover:bg-primary-fixed-dim transition-colors">Manage</button>
-                </div>
-              </div>
+            <div>
+              <p className="font-headline-md text-headline-md text-on-surface">Quick Add</p>
+              <p className="text-label-md text-on-surface-variant">Draft a new product SKU</p>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div className="glass-card rounded-2xl overflow-hidden">
+          <table className="w-full">
+            <thead className="bg-surface-container-high">
+              <tr>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant">Product</th>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant">SKU</th>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant">Category</th>
+                <th className="text-right px-6 py-4 font-label-md text-label-md text-on-surface-variant">Price</th>
+                <th className="text-right px-6 py-4 font-label-md text-label-md text-on-surface-variant">Stock</th>
+                <th className="text-center px-6 py-4 font-label-md text-label-md text-on-surface-variant">Status</th>
+                <th className="text-right px-6 py-4 font-label-md text-label-md text-on-surface-variant">Demand</th>
+                <th className="text-right px-6 py-4 font-label-md text-label-md text-on-surface-variant">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-outline-variant/10">
+              {filteredProducts.map((product) => {
+                const ss = stockStatus(product)
+                return (
+                  <tr key={product.id} className="hover:bg-surface-container-low transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center">
+                          <span className="material-symbols-outlined text-primary text-[20px]">inventory_2</span>
+                        </div>
+                        <div>
+                          <p className="font-label-md text-label-md font-semibold text-on-surface">{product.name}</p>
+                          {product.ai_recommended && <span className="text-label-sm text-primary font-semibold">AI Recommended</span>}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 font-body-md text-body-md text-on-surface-variant">{product.sku}</td>
+                    <td className="px-6 py-4"><span className="px-2 py-1 bg-surface-container rounded-lg text-label-sm">{product.category}</span></td>
+                    <td className="px-6 py-4 text-right font-label-md font-semibold">${Number(product.price).toFixed(2)}</td>
+                    <td className="px-6 py-4 text-right font-label-md">{product.stock.toLocaleString()}</td>
+                    <td className="px-6 py-4 text-center">
+                      <span className={`px-3 py-1 rounded-full text-label-sm font-semibold bg-${ss.color}/10 text-${ss.color}`}>{ss.label}</span>
+                    </td>
+                    <td className="px-6 py-4 text-right font-label-md">{product.demand_label} ({product.demand_prediction}%)</td>
+                    <td className="px-6 py-4 text-right">
+                      <button onClick={() => openEditModal(product)} className="px-3 py-1.5 bg-surface-secondary text-primary rounded-lg text-label-sm hover:bg-primary-fixed-dim transition-colors">Manage</button>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title="New Product">
         <form onSubmit={handleCreate} className="space-y-4">

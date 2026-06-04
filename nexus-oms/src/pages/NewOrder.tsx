@@ -11,6 +11,7 @@ interface CartItem {
   product_name: string
   quantity: number
   unit_price: number
+  stock: number
 }
 
 export default function NewOrder() {
@@ -21,34 +22,58 @@ export default function NewOrder() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [notes, setNotes] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('All Products')
   const [submitting, setSubmitting] = useState(false)
+  const [customerSearch, setCustomerSearch] = useState('')
 
   useEffect(() => {
     getCustomers().then(setCustomers).catch(console.error)
     getProducts().then(setProducts).catch(console.error)
   }, [])
 
-  const filteredProducts = products.filter(p =>
-    !searchTerm || p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.sku.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredCustomers = customers.filter(c =>
+    !customerSearch || c.name.toLowerCase().includes(customerSearch.toLowerCase()) ||
+    (c.company && c.company.toLowerCase().includes(customerSearch.toLowerCase())) ||
+    (c.email && c.email.toLowerCase().includes(customerSearch.toLowerCase()))
   )
+
+  const productCategories = [...new Set(products.map(p => p.category).filter(Boolean))]
+
+  const filteredProducts = products.filter(p => {
+    if (categoryFilter !== 'All Products' && p.category !== categoryFilter) return false
+    if (!searchTerm) return true
+    return p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.sku.toLowerCase().includes(searchTerm.toLowerCase())
+  })
+
+  const selectedCustomer = customers.find(c => c.id === selectedCustomerId)
 
   function addToCart(product: Product) {
     setCart(prev => {
       const existing = prev.find(item => item.product_id === product.id)
+      const currentQty = existing ? existing.quantity : 0
+      if (currentQty >= product.stock) {
+        showToast('Insufficient stock available', 'error')
+        return prev
+      }
       if (existing) {
         return prev.map(item =>
           item.product_id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         )
       }
-      return [...prev, { product_id: product.id, product_name: product.name, quantity: 1, unit_price: Number(product.price) }]
+      return [...prev, { product_id: product.id, product_name: product.name, quantity: 1, unit_price: Number(product.price), stock: product.stock }]
     })
   }
 
   function updateCartQty(productId: string, delta: number) {
     setCart(prev => prev.map(item => {
       if (item.product_id !== productId) return item
-      const newQty = Math.max(1, item.quantity + delta)
+      const newQty = item.quantity + delta
+      if (newQty < 1) return item
+      if (newQty > item.stock) {
+        showToast(`Only ${item.stock} units available`, 'error')
+        return item
+      }
       return { ...item, quantity: newQty }
     }))
   }
@@ -73,11 +98,15 @@ export default function NewOrder() {
     }
     setSubmitting(true)
     try {
-      const order = await createOrderWithItems(selectedCustomerId, cart, notes)
+      const orderItems = cart.map(({ product_id, product_name, quantity, unit_price }) => ({
+        product_id, product_name, quantity, unit_price,
+      }))
+      const order = await createOrderWithItems(selectedCustomerId, orderItems, notes)
       showToast(`Order ${order.order_id} created successfully!`, 'success')
       setCart([])
       setSelectedCustomerId('')
       setNotes('')
+      setCustomerSearch('')
     } catch (err) {
       showToast((err as Error).message, 'error')
     } finally {
@@ -91,8 +120,8 @@ export default function NewOrder() {
       <div className="flex justify-between items-end mb-10">
         <h2 className="font-display-lg text-display-lg text-ink-primary tracking-tight">Create New Order</h2>
         <div className="flex gap-4">
-          <button className="px-6 py-3 font-label-md text-label-md font-semibold text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-xl">Save as Draft</button>
-          <button onClick={handlePlaceOrder} disabled={submitting} className="px-6 py-3 font-label-md text-label-md font-semibold bg-primary text-white hover:opacity-90 transition-all rounded-xl shadow-lg shadow-primary/20 disabled:opacity-50">
+          <button onClick={handlePlaceOrder} disabled={submitting || cart.length === 0}
+            className="px-6 py-3 font-label-md text-label-md font-semibold bg-primary text-white hover:opacity-90 transition-all rounded-xl shadow-lg shadow-primary/20 disabled:opacity-50">
             {submitting ? 'Processing...' : 'Review Order'}
           </button>
         </div>
@@ -108,18 +137,39 @@ export default function NewOrder() {
                 <h3 className="font-headline-lg text-headline-lg text-ink-primary">Customer Selection</h3>
               </div>
             </div>
-            <div className="relative">
-              <select
-                className="w-full h-14 bg-surface-container-low border border-outline-variant/10 rounded-xl px-4 font-body-md focus:ring-2 focus:ring-primary/20 transition-all"
-                value={selectedCustomerId}
-                onChange={e => setSelectedCustomerId(e.target.value)}
-              >
-                <option value="">Select a customer...</option>
-                {customers.map(c => (
-                  <option key={c.id} value={c.id}>{c.name} — {c.company || c.email}</option>
-                ))}
-              </select>
+            <div className="relative group mb-4">
+              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+              <input className="w-full h-14 bg-surface-container-low border border-outline-variant/10 rounded-xl pl-12 pr-4 font-body-md focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search by name, company, or email..." type="text" value={customerSearch} onChange={e => setCustomerSearch(e.target.value)} />
             </div>
+            {selectedCustomer && (
+              <div className="flex items-center gap-3 p-3 bg-surface-container-highest/50 rounded-xl border border-primary/20 mb-4">
+                <div className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs">{selectedCustomer.initials || selectedCustomer.name.charAt(0)}</div>
+                <div className="flex-1">
+                  <p className="font-label-md text-label-md text-on-surface leading-tight">{selectedCustomer.name}</p>
+                  <p className="font-label-sm text-label-sm text-outline">{selectedCustomer.company || selectedCustomer.email}</p>
+                </div>
+                <button onClick={() => { setSelectedCustomerId(''); setCustomerSearch('') }} className="text-outline hover:text-error">
+                  <span className="material-symbols-outlined text-[18px]">close</span>
+                </button>
+              </div>
+            )}
+            {!selectedCustomer && (
+              <div className="max-h-48 overflow-y-auto space-y-1">
+                {filteredCustomers.map(c => (
+                  <button key={c.id} onClick={() => setSelectedCustomerId(c.id)}
+                    className="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface-container-high transition-colors">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">{c.initials || c.name.charAt(0)}</div>
+                    <div>
+                      <p className="font-label-md text-label-md text-on-surface">{c.name}</p>
+                      <p className="font-label-sm text-label-sm text-outline">{c.company || c.email}</p>
+                    </div>
+                  </button>
+                ))}
+                {filteredCustomers.length === 0 && (
+                  <p className="text-center py-4 text-on-surface-variant text-label-md">No customers found</p>
+                )}
+              </div>
+            )}
           </section>
           <section className="glass-panel rounded-xl p-8">
             <div className="flex items-center justify-between mb-8">
@@ -130,26 +180,49 @@ export default function NewOrder() {
                 <h3 className="font-headline-lg text-headline-lg text-ink-primary">Product Catalog</h3>
               </div>
             </div>
+            <div className="flex flex-wrap gap-3 mb-8">
+              <button onClick={() => setCategoryFilter('All Products')} className={`px-4 py-2 rounded-full font-label-md transition-colors ${categoryFilter === 'All Products' ? 'border border-primary bg-primary/5 text-primary' : 'border border-outline-variant/30 text-on-surface-variant hover:border-primary/50'}`}>All Products</button>
+              {productCategories.map(cat => (
+                <button key={cat} onClick={() => setCategoryFilter(cat!)} className={`px-4 py-2 rounded-full font-label-md transition-colors ${categoryFilter === cat ? 'border border-primary bg-primary/5 text-primary' : 'border border-outline-variant/30 text-on-surface-variant hover:border-primary/50'}`}>{cat}</button>
+              ))}
+            </div>
             <div className="relative mb-6">
               <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
               <input className="w-full h-12 bg-surface-container-low border border-outline-variant/10 rounded-xl pl-12 pr-4 font-body-md focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search products..." type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto">
-              {filteredProducts.map((product) => (
-                <div key={product.id} className="group bg-white rounded-xl p-4 border border-outline-variant/5 transition-all hover:translate-y-[-4px] hover:shadow-lg">
-                  <div className="mb-4 aspect-square rounded-lg bg-surface-container-low overflow-hidden flex items-center justify-center text-on-surface-variant">
-                    <span className="material-symbols-outlined text-[48px]">inventory_2</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-h-[600px] overflow-y-auto">
+              {filteredProducts.map((product) => {
+                const cartItem = cart.find(i => i.product_id === product.id)
+                const qtyInCart = cartItem ? cartItem.quantity : 0
+                const available = product.stock - qtyInCart
+                return (
+                  <div key={product.id} className={`group bg-white rounded-xl p-4 border transition-all hover:translate-y-[-4px] ${product.ai_recommended ? 'ai-glow' : 'border-outline-variant/5 hover:shadow-xl hover:shadow-black/5'}`}>
+                    {product.ai_recommended && (
+                      <div className="absolute top-2 left-2 px-2 py-1 bg-primary text-white text-[10px] font-bold rounded-md flex items-center gap-1 z-10">
+                        <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
+                        AI RECOMMENDED
+                      </div>
+                    )}
+                    <div className="relative mb-4 aspect-square rounded-lg bg-surface-container-low overflow-hidden flex items-center justify-center text-on-surface-variant">
+                      <span className="material-symbols-outlined text-[48px]">inventory_2</span>
+                    </div>
+                    <h4 className="font-headline-md text-headline-md text-on-surface mb-1">{product.name}</h4>
+                    <p className="font-label-sm text-label-sm text-outline mb-2">SKU: {product.sku}</p>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className={`text-label-sm font-semibold ${product.stock <= 0 ? 'text-error' : product.stock <= 20 ? 'text-warning' : 'text-success'}`}>
+                        {product.stock <= 0 ? 'Out of Stock' : `${available} available`}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-headline-md text-headline-md text-primary">${Number(product.price).toFixed(2)}</span>
+                      <button onClick={() => addToCart(product)} disabled={product.stock <= 0 || available <= 0}
+                        className={`h-10 w-10 rounded-full flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed ${product.ai_recommended ? 'bg-primary-container text-white hover:scale-105 active:scale-95' : 'border border-outline-variant/30 text-outline hover:text-primary hover:border-primary hover:scale-105 active:scale-95'}`}>
+                        <span className="material-symbols-outlined">add</span>
+                      </button>
+                    </div>
                   </div>
-                  <h4 className="font-headline-md text-headline-md text-on-surface mb-1">{product.name}</h4>
-                  <p className="font-label-sm text-label-sm text-outline mb-4">SKU: {product.sku}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-headline-md text-headline-md text-primary">${Number(product.price).toFixed(2)}</span>
-                    <button onClick={() => addToCart(product)} className="h-10 w-10 rounded-full bg-primary-container text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
-                      <span className="material-symbols-outlined">add</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </section>
           <section className="glass-panel rounded-xl p-8">
@@ -238,6 +311,14 @@ export default function NewOrder() {
                 Authorized Transaction Secured by Nexus ML
               </p>
             </section>
+            <div className="p-6 bg-gradient-to-br from-primary to-primary-container rounded-xl text-white">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
+                <span className="font-label-md text-label-md font-bold uppercase tracking-widest">Bundle Offer</span>
+              </div>
+              <p className="font-headline-md text-headline-md mb-4">Add 'Premium Support' for $199/yr</p>
+              <button className="w-full py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-lg font-label-md transition-colors">Apply Bundle Discount</button>
+            </div>
           </div>
         </div>
       </div>
