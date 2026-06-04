@@ -1,0 +1,5 @@
+[
+  {"name":"Lenovo LOQ Gaming Laptop","category":"Laptop","price":1200,"stock":50,"sku":"LEN-LOQ-001","ai_recommended":true},
+  {"name":"Samsung Galaxy A55","category":"Cellphone","price":800,"stock":100,"sku":"SAM-A55-001","ai_recommended":true},
+  {"name":"Office Work Table","category":"Furniture","price":300,"stock":25,"sku":"OFC-TBL-001","ai_recommended":false}
+]

@@ -4,9 +4,10 @@ import { useAuthContext } from '@/contexts/AuthContext'
 interface TopNavProps {
   searchPlaceholder?: string
   onSearch?: (value: string) => void
+  onMenuToggle?: () => void
 }
 
-export default function TopNav({ searchPlaceholder = "Search...", onSearch }: TopNavProps) {
+export default function TopNav({ searchPlaceholder = "Search...", onSearch, onMenuToggle }: TopNavProps) {
   const { user, signOut } = useAuthContext()
   const [showMenu, setShowMenu] = useState(false)
 
@@ -18,36 +19,41 @@ export default function TopNav({ searchPlaceholder = "Search...", onSearch }: To
   const role = user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Staff'
 
   return (
-    <header className="fixed top-0 right-0 w-[calc(100%-18rem)] h-16 z-40 bg-glass-fill backdrop-blur-3xl border-b border-outline-variant/10 flex justify-between items-center px-gutter">
-      <div className="relative w-96">
-        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60 text-[20px]">
-          search
-        </span>
-        <input
-          className="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-md focus:ring-2 focus:ring-primary/20 transition-all"
-          placeholder={searchPlaceholder}
-          type="text"
-          onChange={(e) => onSearch?.(e.target.value)}
-        />
+    <header className="fixed top-0 right-0 w-full lg:w-[calc(100%-18rem)] h-16 z-40 bg-glass-fill backdrop-blur-3xl border-b border-outline-variant/10 flex justify-between items-center px-4 sm:px-gutter">
+      <div className="flex items-center gap-3 flex-1 min-w-0">
+        <button onClick={onMenuToggle} className="lg:hidden p-2 text-on-surface-variant hover:text-ink-primary rounded-lg hover:bg-surface-container-highest">
+          <span className="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+        <div className="relative w-full max-w-xs sm:max-w-sm lg:max-w-md">
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60 text-[20px]">
+            search
+          </span>
+          <input
+            className="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-md focus:ring-2 focus:ring-primary/20 transition-all"
+            placeholder={searchPlaceholder}
+            type="text"
+            onChange={(e) => onSearch?.(e.target.value)}
+          />
+        </div>
       </div>
-      <div className="flex items-center gap-4">
-        <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container text-on-surface-variant transition-colors">
+      <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+        <button className="hidden sm:flex w-10 h-10 items-center justify-center rounded-full hover:bg-surface-container text-on-surface-variant transition-colors">
           <span className="material-symbols-outlined text-[22px]">notifications</span>
         </button>
-        <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container text-on-surface-variant transition-colors">
+        <button className="hidden sm:flex w-10 h-10 items-center justify-center rounded-full hover:bg-surface-container text-on-surface-variant transition-colors">
           <span className="material-symbols-outlined text-[22px]">add_circle</span>
         </button>
-        <div className="h-8 w-px bg-outline-variant/30 mx-2" />
+        <div className="hidden sm:block h-8 w-px bg-outline-variant/30 mx-1" />
         <div className="relative">
           <div
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer group"
             onClick={() => setShowMenu(!showMenu)}
           >
-            <div className="text-right hidden sm:block">
-              <p className="font-label-md text-on-surface leading-none">{name}</p>
-              <p className="font-label-sm text-on-surface-variant opacity-70">{role}</p>
+            <div className="text-right hidden md:block">
+              <p className="font-label-md text-on-surface leading-none text-sm">{name}</p>
+              <p className="font-label-sm text-on-surface-variant opacity-70 text-xs">{role}</p>
             </div>
-            <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm border border-outline-variant/20 shadow-sm">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs sm:text-sm border border-outline-variant/20 shadow-sm">
               {initials}
             </div>
           </div>

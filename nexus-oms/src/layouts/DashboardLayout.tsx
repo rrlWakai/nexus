@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from '@/components/layout/Sidebar'
 import TopNav from '@/components/layout/TopNav'
+import { useSidebar } from '@/hooks/useSidebar'
 import { type NavItem } from '@/types'
 
 const navItems: NavItem[] = [
@@ -16,13 +17,14 @@ const navItems: NavItem[] = [
 
 export default function DashboardLayout() {
   const location = useLocation()
+  const { isMobileOpen, toggleMobile, closeMobile } = useSidebar()
 
   return (
     <div className="min-h-screen bg-surface">
-      <Sidebar navItems={navItems} currentPath={location.pathname} />
-      <main className="ml-72 min-h-screen">
-        <TopNav />
-        <section className="pt-24 pb-12 px-gutter max-w-container-max mx-auto">
+      <Sidebar navItems={navItems} currentPath={location.pathname} isMobileOpen={isMobileOpen} onMobileClose={closeMobile} />
+      <main className="min-h-screen lg:ml-72">
+        <TopNav onMenuToggle={toggleMobile} />
+        <section className="pt-24 pb-12 px-4 sm:px-6 md:px-gutter max-w-container-max mx-auto">
           <Outlet />
         </section>
       </main>

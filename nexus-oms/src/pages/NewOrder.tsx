@@ -126,8 +126,8 @@ export default function NewOrder() {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-gutter">
-        <div className="col-span-12 lg:col-span-8 space-y-gutter">
+      <div className="grid grid-cols-12 gap-4 sm:gap-gutter">
+        <div className="col-span-12 lg:col-span-8 space-y-4 sm:space-y-gutter">
           <section className="glass-panel rounded-xl p-8">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
@@ -180,16 +180,16 @@ export default function NewOrder() {
                 <h3 className="font-headline-lg text-headline-lg text-ink-primary">Product Catalog</h3>
               </div>
             </div>
-            <div className="flex flex-wrap gap-3 mb-8">
+            <div className="flex flex-wrap gap-2 sm:gap-3 mb-8">
               {ORDER_CATEGORIES.map(cat => (
-                <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-4 py-2 rounded-full font-label-md transition-colors ${categoryFilter === cat ? 'border border-primary bg-primary/5 text-primary' : 'border border-outline-variant/30 text-on-surface-variant hover:border-primary/50'}`}>{cat}</button>
+                <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-3 sm:px-4 py-2 rounded-full font-label-md transition-colors text-sm ${categoryFilter === cat ? 'border border-primary bg-primary/5 text-primary' : 'border border-outline-variant/30 text-on-surface-variant hover:border-primary/50'}`}>{cat}</button>
               ))}
             </div>
             <div className="relative mb-6">
               <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
               <input className="w-full h-12 bg-surface-container-low border border-outline-variant/10 rounded-xl pl-12 pr-4 font-body-md focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search products..." type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-h-[600px] overflow-y-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 max-h-[600px] overflow-y-auto">
               {filteredProducts.map((product) => {
                 const cartItem = cart.find(i => i.product_id === product.id)
                 const qtyInCart = cartItem ? cartItem.quantity : 0
@@ -247,8 +247,8 @@ export default function NewOrder() {
             </div>
           </section>
         </div>
-        <div className="col-span-12 lg:col-span-4 space-y-gutter">
-          <div className="sticky top-24 space-y-gutter">
+        <div className="col-span-12 lg:col-span-4 space-y-4 sm:space-y-gutter">
+          <div className="lg:sticky lg:top-24 space-y-4 sm:space-y-gutter">
             <section className="glass-panel rounded-xl p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-headline-md text-headline-md text-ink-primary">Order Cart</h3>

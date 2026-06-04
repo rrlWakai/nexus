@@ -47,7 +47,7 @@ export default function Reports() {
         title="Reports Central"
         subtitle="Analyze enterprise performance and export executive summaries."
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
         <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
           <div className="flex justify-between items-start">
             <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
@@ -111,7 +111,9 @@ export default function Reports() {
           <h3 className="font-headline-md text-headline-md text-on-surface">Recent Generated Reports</h3>
           <button className="text-primary font-semibold text-label-md hover:underline">View History</button>
         </div>
-        <DataTable columns={columns} data={reports} headerClassName="bg-surface-container-low/50" />
+        <div className="overflow-x-auto">
+          <DataTable columns={columns} data={reports} headerClassName="bg-surface-container-low/50" />
+        </div>
       </div>
     </>
   )

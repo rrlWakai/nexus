@@ -154,20 +154,20 @@ export default function Products() {
           </button>
         }
       />
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-2">
-          <span className="text-label-md font-label-md text-on-surface-variant mr-2">Category:</span>
+      <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">
+          <span className="text-label-md font-label-md text-on-surface-variant mr-1 shrink-0">Category:</span>
           {CATEGORIES.map(cat => (
             <button key={cat} onClick={() => setCategory(cat)}
-              className={`px-4 py-2 rounded-full text-label-md font-medium transition-colors ${category === cat ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'}`}>
+              className={`shrink-0 px-4 py-2 rounded-full text-label-md font-medium transition-colors ${category === cat ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'}`}>
               {cat}
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-3">
-          <div className="relative">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="relative flex-1 sm:flex-initial">
             <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
-            <input className="w-56 bg-surface-container-low border border-outline-variant/10 rounded-full py-2 pl-9 pr-4 text-body-md focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search products..." type="text" value={search} onChange={e => setSearch(e.target.value)} />
+            <input className="w-full sm:w-44 lg:w-56 bg-surface-container-low border border-outline-variant/10 rounded-full py-2 pl-9 pr-4 text-body-md focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search..." type="text" value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <select className="bg-surface-container-low border border-outline-variant/10 rounded-lg py-2 px-3 text-label-md font-medium focus:ring-primary focus:border-primary" value={stockFilter} onChange={e => setStockFilter(e.target.value)}>
             <option>All Statuses</option>
@@ -175,7 +175,7 @@ export default function Products() {
             <option>Low Stock</option>
             <option>Out of Stock</option>
           </select>
-          <div className="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
+          <div className="hidden sm:flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
             <button onClick={() => setViewMode('grid')} className={`px-3 py-1.5 rounded-md text-label-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm font-semibold' : 'text-outline hover:text-on-surface'}`}>
               <span className="material-symbols-outlined text-[18px]">grid_view</span>
             </button>
@@ -244,6 +244,7 @@ export default function Products() {
         </div>
       ) : (
         <div className="glass-card rounded-2xl overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-surface-container-high">
               <tr>
@@ -290,6 +291,7 @@ export default function Products() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 

@@ -189,11 +189,11 @@ export default function Customers() {
         </div>
       </section>
       <section className="bg-white rounded-[2rem] border border-outline-variant/10 overflow-hidden shadow-sm">
-        <div className="p-8 border-b border-outline-variant/10 flex justify-between items-center">
+        <div className="p-4 sm:p-8 border-b border-outline-variant/10 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
           <h3 className="font-headline-lg text-headline-lg text-ink-primary">All Customers</h3>
-          <div className="flex gap-2">
+          <div className="w-full sm:w-auto">
             <input
-              className="bg-surface-container-low border-none rounded-lg px-4 py-2 text-label-md"
+              className="w-full sm:w-56 bg-surface-container-low border-none rounded-lg px-4 py-2 text-label-md"
               placeholder="Search customers..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -205,7 +205,9 @@ export default function Customers() {
             <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
-          <DataTable columns={columns} data={filtered} headerClassName="bg-surface-container-low" />
+          <div className="overflow-x-auto">
+            <DataTable columns={columns} data={filtered} headerClassName="bg-surface-container-low" />
+          </div>
         )}
         <Pagination currentPage={page} totalItems={filtered.length} pageSize={25} onPageChange={setPage} />
       </section>

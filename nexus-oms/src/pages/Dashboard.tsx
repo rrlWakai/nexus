@@ -20,7 +20,7 @@ export default function Dashboard() {
         title="Luminous Intelligence"
         subtitle="Real-time enterprise overview with AI-driven insights."
       />
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
         <KpiCard
           label="Total Revenue"
           value={`$${(stats.totalRevenue / 1000000).toFixed(1)}M`}
@@ -50,7 +50,7 @@ export default function Dashboard() {
           </div>
         </KpiCard>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
         <div className="glass-card p-6 rounded-3xl">
           <div className="flex justify-between items-start">
             <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">

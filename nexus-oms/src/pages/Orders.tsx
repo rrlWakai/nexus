@@ -149,7 +149,9 @@ export default function Orders() {
         <KpiCard label="Revenue" value={`$${stats.revenue.toLocaleString()}`} icon="payments" iconColor="text-success" />
       </div>
       <div className="bg-system-background rounded-3xl shadow-[0px_10px_40px_rgba(0,0,0,0.03)] border border-outline-variant/10 overflow-hidden">
-        <DataTable columns={columns} data={orders} />
+        <div className="overflow-x-auto">
+          <DataTable columns={columns} data={orders} />
+        </div>
         <Pagination currentPage={page} totalItems={orders.length} pageSize={10} onPageChange={setPage} />
       </div>
       {insights.slice(0, 1).map((insight) => (
