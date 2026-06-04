@@ -37,7 +37,7 @@ export default function NewOrder() {
     (c.email && c.email.toLowerCase().includes(customerSearch.toLowerCase()))
   )
 
-  const productCategories = [...new Set(products.map(p => p.category).filter(Boolean))]
+  const ORDER_CATEGORIES = ['All Products', 'Laptop', 'Cellphone', 'Furniture']
 
   const filteredProducts = products.filter(p => {
     if (categoryFilter !== 'All Products' && p.category !== categoryFilter) return false
@@ -181,9 +181,8 @@ export default function NewOrder() {
               </div>
             </div>
             <div className="flex flex-wrap gap-3 mb-8">
-              <button onClick={() => setCategoryFilter('All Products')} className={`px-4 py-2 rounded-full font-label-md transition-colors ${categoryFilter === 'All Products' ? 'border border-primary bg-primary/5 text-primary' : 'border border-outline-variant/30 text-on-surface-variant hover:border-primary/50'}`}>All Products</button>
-              {productCategories.map(cat => (
-                <button key={cat} onClick={() => setCategoryFilter(cat!)} className={`px-4 py-2 rounded-full font-label-md transition-colors ${categoryFilter === cat ? 'border border-primary bg-primary/5 text-primary' : 'border border-outline-variant/30 text-on-surface-variant hover:border-primary/50'}`}>{cat}</button>
+              {ORDER_CATEGORIES.map(cat => (
+                <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-4 py-2 rounded-full font-label-md transition-colors ${categoryFilter === cat ? 'border border-primary bg-primary/5 text-primary' : 'border border-outline-variant/30 text-on-surface-variant hover:border-primary/50'}`}>{cat}</button>
               ))}
             </div>
             <div className="relative mb-6">
