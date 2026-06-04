@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Order | Nexus OMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary": "#004e9f",
+                "on-surface": "#1a1c1d",
+                "on-error-container": "#93000a",
+                "surface-container-lowest": "#ffffff",
+                "primary-container": "#0066cc",
+                "tertiary-fixed-dim": "#ffb692",
+                "on-secondary-fixed": "#1a1b1f",
+                "secondary-fixed-dim": "#c7c6cb",
+                "on-tertiary": "#ffffff",
+                "error": "#FF3B30",
+                "surface-container-highest": "#e2e2e4",
+                "success": "#34C759",
+                "outline-variant": "#c1c6d5",
+                "on-background": "#1a1c1d",
+                "tertiary": "#883700",
+                "ink-secondary": "#424245",
+                "primary-fixed": "#d7e3ff",
+                "on-secondary-container": "#626267",
+                "surface-dim": "#d9dadc",
+                "on-primary-container": "#dfe8ff",
+                "tertiary-container": "#af4900",
+                "error-container": "#ffdad6",
+                "on-primary-fixed-variant": "#00458e",
+                "secondary-fixed": "#e3e2e7",
+                "secondary": "#5e5e63",
+                "system-background": "#FFFFFF",
+                "on-surface-variant": "#414753",
+                "inverse-primary": "#aac7ff",
+                "on-secondary": "#ffffff",
+                "warning": "#FF9F0C",
+                "on-tertiary-fixed-variant": "#793000",
+                "surface": "#f9f9fb",
+                "surface-container-high": "#e8e8ea",
+                "outline": "#727784",
+                "tertiary-fixed": "#ffdbcb",
+                "surface-tint": "#005cba",
+                "on-secondary-fixed-variant": "#46464b",
+                "surface-secondary": "#F2F2F7",
+                "on-primary": "#ffffff",
+                "surface-container": "#eeeef0",
+                "primary-fixed-dim": "#aac7ff",
+                "glass-fill": "rgba(255, 255, 255, 0.72)",
+                "ink-primary": "#1D1D1F",
+                "on-primary-fixed": "#001b3e",
+                "on-tertiary-fixed": "#341100",
+                "secondary-container": "#e0dfe4",
+                "inverse-on-surface": "#f0f0f2",
+                "background": "#f9f9fb",
+                "on-error": "#ffffff",
+                "surface-variant": "#e2e2e4",
+                "surface-container-low": "#f3f3f5",
+                "surface-bright": "#f9f9fb",
+                "on-tertiary-container": "#ffe3d6",
+                "inverse-surface": "#2f3132"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "1.25rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "gutter": "24px",
+                "base": "8px",
+                "container-max": "1440px",
+                "margin-desktop": "48px",
+                "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                "label-md": ["Inter"],
+                "headline-md": ["Hanken Grotesk"],
+                "headline-xl": ["Hanken Grotesk"],
+                "body-lg": ["Inter"],
+                "display-lg": ["Hanken Grotesk"],
+                "headline-xl-mobile": ["Hanken Grotesk"],
+                "headline-lg": ["Hanken Grotesk"],
+                "body-md": ["Inter"],
+                "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                "label-md": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "body-lg": ["17px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-xl-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "body-md": ["15px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "label-sm": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.03em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f9f9fb;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.03);
+        }
+        .ai-glow {
+            position: relative;
+        }
+        .ai-glow::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, #0066cc, #34C759);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e2e2e4; border-radius: 10px; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-72 flex flex-col fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant/10 z-50">
+<div class="flex flex-col h-full py-base gap-2">
+<div class="px-gutter mb-8 pt-4">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Nexus OMS</h1>
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Enterprise Intelligence</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-semibold border-r-2 border-primary bg-surface-container rounded-xl" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-body-md text-body-md font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-md text-body-md font-medium">Analytics &amp; ML</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-body-md text-body-md font-medium">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-body-md text-body-md font-medium">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-6">
+<div class="p-4 bg-primary/5 rounded-xl border border-primary/10">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-md text-label-md text-primary font-bold">PRO ACCOUNT</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">24/7 Priority Support active.</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 w-[calc(100%-18rem)] h-16 z-40 bg-glass-fill backdrop-blur-3xl border-b border-outline-variant/10 flex items-center justify-between px-gutter">
+<div class="flex items-center gap-4 w-1/2">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-md focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Global Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/20 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="font-label-md text-label-md font-semibold text-on-surface">Alex Rivera</p>
+<p class="font-label-sm text-label-sm text-outline">Administrator</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden">
+<img alt="Administrator Profile" class="h-full w-full object-cover" data-alt="A professional headshot of a Hispanic male administrator in his 30s, wearing a crisp white shirt and a navy blazer. The background is a soft-focus modern office with natural light. The overall mood is professional, capable, and warm, fitting the Nexus OMS brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiFEeOjWX75gq3oNr6YrIyNQ9yq920-txwpGVN87xuVC9ryNPQQSP0ihBj4ougvTenQZJI6yXbT57eX-PwR3IVcg-rsbWOFPY2TyOS43bc7hXYDU8Rq8rd1IEoXc0gte2JC1b0rW8If9plEsDlxPcjwhGmKWpxqHHe4xU1Baj5oG96m2qgexMUOgVwCum4qESQLazOj09MXCtBa2I7Vv_TeEXzWNTCfZT9j7d-wX8XiZKDedP_ZA1rJ25Cd79CSapOnI7v6vpTxHU"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-72 pt-24 pb-12 px-margin-desktop max-w-container-max mx-auto">
+<div class="flex justify-between items-end mb-10">
+<div>
+<nav class="flex items-center gap-2 text-outline font-label-md mb-2">
+<span>Orders</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-semibold">New Order</span>
+</nav>
+<h2 class="font-display-lg text-display-lg text-ink-primary tracking-tight">Create New Order</h2>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 font-label-md text-label-md font-semibold text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-xl">Save as Draft</button>
+<button class="px-6 py-3 font-label-md text-label-md font-semibold bg-primary text-white hover:opacity-90 transition-all rounded-xl shadow-lg shadow-primary/20">Review Order</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left Column: Order Composition -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<!-- Section 1: Customer Selection -->
+<section class="glass-panel rounded-xl p-8">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-ink-primary">Customer Selection</h3>
+</div>
+<button class="flex items-center gap-2 text-primary font-label-md font-semibold hover:underline">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Add New Customer
+                        </button>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full h-14 bg-surface-container-low border border-outline-variant/10 rounded-xl pl-12 pr-4 font-body-md focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all" placeholder="Search by name, company, or email..." type="text"/>
+<div class="mt-4 flex gap-2 overflow-x-auto pb-2">
+<div class="flex-shrink-0 flex items-center gap-3 p-3 bg-surface-container-highest/50 rounded-xl border border-primary/20">
+<div class="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs">GR</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface leading-tight">Global Retailers Inc.</p>
+<p class="font-label-sm text-label-sm text-outline">Customer #10293</p>
+</div>
+<button class="ml-2 text-outline hover:text-error"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Product Selection -->
+<section class="glass-panel rounded-xl p-8">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-ink-primary">Product Catalog</h3>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-2 font-label-md text-label-md bg-white shadow-sm rounded-md font-semibold">Grid</button>
+<button class="px-4 py-2 font-label-md text-label-md text-outline hover:text-on-surface">List</button>
+</div>
+</div>
+<div class="flex flex-wrap gap-3 mb-8">
+<button class="px-4 py-2 rounded-full border border-primary bg-primary/5 text-primary font-label-md">All Products</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 text-on-surface-variant font-label-md hover:border-primary/50 transition-colors">Consumer Tech</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 text-on-surface-variant font-label-md hover:border-primary/50 transition-colors">Enterprise Hardware</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 text-on-surface-variant font-label-md hover:border-primary/50 transition-colors">Cloud Services</button>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- AI Recommended Product -->
+<div class="ai-glow group bg-white rounded-xl p-4 transition-all hover:translate-y-[-4px]">
+<div class="relative mb-4 aspect-square rounded-lg bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A premium, sleek silver laptop sitting on a minimalist white desk in a high-key lighting environment. The laptop screen shows a sophisticated dashboard with data visualizations in shades of blue and teal. The scene is bright, modern, and clinical, reflecting enterprise-grade technology and intelligence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkDf-ZVQ0YulUJye58lJLqxhS9L5-ZhHuKzgQhRDyMC27RQJ55iH8v7caerBy5oB5gGBwFFwhbfdNl74V51K77EIHrFuOETUOqn-B5OePnE-TFkk167zbaqzr7acA4upgQOxXP2-7_-leGlQUqN4lrvaGEiA7YCbUBxPxXHSrhuYMqHcOG1CvAmi6UA7v3Gkkl2JlXSpqQsyRnjQgIxoOozY2TFylyIgSe8kLE74_-cjBEhXyfBvTN8e3Zk1_Qx0B0Rif1XHxXe68"/>
+<div class="absolute top-2 left-2 px-2 py-1 bg-primary text-white text-[10px] font-bold rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">psychology</span>
+                                    AI RECOMMENDED
+                                </div>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-1">Nexus Pro Workstation</h4>
+<p class="font-label-sm text-label-sm text-outline mb-4">SKU: NXP-880-L</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-primary">$2,499.00</span>
+<button class="h-10 w-10 rounded-full bg-primary-container text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Regular Product 1 -->
+<div class="group bg-white rounded-xl p-4 border border-outline-variant/5 transition-all hover:translate-y-[-4px] hover:shadow-xl hover:shadow-black/5">
+<div class="relative mb-4 aspect-square rounded-lg bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A set of professional-grade wireless noise-canceling headphones in matte space gray. They are presented on a minimalist wooden stand against a clean, light-colored background. Soft, diffused lighting highlights the premium textures of the leather and metal components. The mood is sophisticated and high-end." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnWiNq7lL-zcjEL00deLx0VczjR1xY5neqYulREj9A7HzvUvkjl9_aZcuu7DsLZY9zGnQEi2b3zpN9aV2_t5kG6Lc64qUzKIS8BgT6GNPvJbtuV9dQjniC1k0QG1iiKqiQz3XlcuqFOxV-rYiBrt2QPW7QnG1jm9Sbrt4R3freCf6FAMwE5X5s9Rrm28Cem-_wNpCSbrTNZsyjNdnjZhck5lIBxXdbECWcl0JrWitscxRWoMcHC0ow7a42CK4-D9nyeEIiX-El4q4"/>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-1">Quantum ANC Headphones</h4>
+<p class="font-label-sm text-label-sm text-outline mb-4">SKU: QNT-ANC-02</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-on-surface">$349.00</span>
+<button class="h-10 w-10 rounded-full border border-outline-variant/30 text-outline hover:text-primary hover:border-primary flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Regular Product 2 -->
+<div class="group bg-white rounded-xl p-4 border border-outline-variant/5 transition-all hover:translate-y-[-4px] hover:shadow-xl hover:shadow-black/5">
+<div class="relative mb-4 aspect-square rounded-lg bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A modern, compact cloud storage server device featuring a clean, white matte casing with a glowing blue LED status light. It is placed on a minimalist glass surface with soft reflections. High-key lighting and a spacious, airy atmosphere evoke a sense of advanced, reliable cloud technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuMzJPaITRwvTgE7jxyVmsypSnYW6dTENQOHgj6qmugvTjxohH2bt_ZeTVM8glsji2jD7GL-mEmwsKNSl0Jhz0aM7f_CFd-r0dVDNHSETpTQExKYnoAvv4qmO60sjdekb5HlssQMOxrj6o558uUotUrA5d2M9hgw0fy7GSeBj_UE0FFG6Uhj68ZDXYvbxiMtCxW9W3drPxr9YYHGnt_ZUH_htBFENm2SuuhtiXOK4Mpy2JTmdxybcovwwNbfisrr4hYAphO0DJXcY"/>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-1">Nexus Cloud Node Mini</h4>
+<p class="font-label-sm text-label-sm text-outline mb-4">SKU: CLD-MIN-10</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-on-surface">$1,299.00</span>
+<button class="h-10 w-10 rounded-full border border-outline-variant/30 text-outline hover:text-primary hover:border-primary flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Fulfillment Details -->
+<section class="glass-panel rounded-xl p-8">
+<div class="flex items-center gap-3 mb-8">
+<div class="h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-ink-primary">Fulfillment Details</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">Shipping Method</label>
+<select class="w-full h-12 bg-surface-container-low border border-outline-variant/10 rounded-xl px-4 font-body-md focus:ring-2 focus:ring-primary/20 transition-all appearance-none">
+<option>Standard Express (3-5 Days)</option>
+<option>Overnight Priority (Next Day)</option>
+<option>LTL Freight Shipping</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">Requested Delivery Date</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline">calendar_today</span>
+<input class="w-full h-12 bg-surface-container-low border border-outline-variant/10 rounded-xl px-4 font-body-md focus:ring-2 focus:ring-primary/20 transition-all" type="date"/>
+</div>
+</div>
+<div class="col-span-full space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">Order Notes</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant/10 rounded-xl p-4 font-body-md focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Special handling instructions, gate codes, or delivery preferences..." rows="3"></textarea>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Cart & Summary -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<!-- Order Cart Sticky -->
+<div class="sticky top-24 space-y-gutter">
+<section class="glass-panel rounded-xl p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-headline-md text-ink-primary">Order Cart</h3>
+<span class="px-2 py-1 bg-primary/10 text-primary font-bold text-[10px] rounded-full">3 ITEMS</span>
+</div>
+<!-- Cart Items -->
+<div class="space-y-4 mb-8">
+<div class="flex gap-4 p-3 bg-white rounded-xl border border-outline-variant/5">
+<div class="h-14 w-14 rounded-lg bg-surface-container-low flex-shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A modern, high-end smartphone with a titanium frame, displayed on a clean white surface. The device's screen is black, reflecting a soft ambient light. The scene is shot in a bright, minimalist style, emphasizing the device's premium build quality and sophisticated design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsE96SL3I2KFS5RLfqFSvk7_EUkmr36cCEPR1G60htgeSq-J8GT0AnJ8jQ11UzHzenwE1hTgSRsLZvI4t4M7NHZdc5jkmO1d_y_t43HNWB8VJPSwM6RcFaSL_7AzLjQaxFWeaW6z25xgjqvfveqJc45JUNvqJJ32caDGEtfu8yQkuNkkPlKRQCbqYOanU92X4QAJX-vYqIzQcsIcHCG-YyalPM6hTQbOzC0sR1OCuJDQzosnVk8a_3UxGlN9O-SKTIYU6H9rbpiAA"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h5 class="font-label-md text-label-md font-semibold text-on-surface">Titanium X20 Phone</h5>
+<button class="text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="flex items-center gap-3 bg-surface-container-low px-2 py-1 rounded-lg">
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">remove</span></button>
+<span class="font-label-md text-label-md font-bold">1</span>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">add</span></button>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">$1,199.00</span>
+</div>
+</div>
+</div>
+<div class="flex gap-4 p-3 bg-white rounded-xl border border-outline-variant/5">
+<div class="h-14 w-14 rounded-lg bg-surface-container-low flex-shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A high-resolution, ultra-slim 4K monitor displayed in a modern, minimalist workspace. The monitor is turned on, showing a vibrant, high-contrast desktop background with abstract blue and purple shapes. The workspace is pristine, with soft lighting and a bright, airy feel that highlights the monitor's sleek design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIPxENZKfYH8AkE2eysXE4OIFrhKEj-sR0VMx1u1ph8uk_GyAKLQuqr5f_vgrdeNnVPFTgPIyqPBR3AF4yeHeTz_nifzxNxxausTnGpI-weGO3WQERCvpymS4y-y6YJUxpbJNo6zoxGL8lTjAPLiqMJ98tL6HuZaStp7lKLo0n5z-_1lEqLww-dTzx6rtQTiEyqC6A8c-uZ8HjeGDt8yLT4gL5ICFCK32S6oh8aRk9EzHMp95hzzqxroOsyYM2H-HZnTSY3uY9Znc"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h5 class="font-label-md text-label-md font-semibold text-on-surface">Nexus UltraWide Monitor</h5>
+<button class="text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="flex items-center gap-3 bg-surface-container-low px-2 py-1 rounded-lg">
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">remove</span></button>
+<span class="font-label-md text-label-md font-bold">2</span>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">add</span></button>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">$1,798.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Totals -->
+<div class="space-y-3 pt-6 border-t border-outline-variant/10">
+<div class="flex justify-between text-on-surface-variant">
+<span class="font-body-md text-body-md">Subtotal</span>
+<span class="font-label-md text-label-md font-medium">$2,997.00</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span class="font-body-md text-body-md">Shipping</span>
+<span class="font-label-md text-label-md font-medium">$45.00</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span class="font-body-md text-body-md">Tax (8%)</span>
+<span class="font-label-md text-label-md font-medium">$239.76</span>
+</div>
+<div class="flex justify-between pt-4 text-on-surface">
+<span class="font-headline-md text-headline-md font-bold">Total</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">$3,281.76</span>
+</div>
+</div>
+<button class="w-full mt-8 py-4 bg-primary text-white font-headline-md rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            Place Order
+                        </button>
+<p class="mt-4 text-center font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px] align-middle mr-1">security</span>
+                            Authorized Transaction Secured by Nexus ML
+                        </p>
+</section>
+<!-- Cross-sell/Promos -->
+<div class="p-6 bg-gradient-to-br from-primary to-primary-container rounded-xl text-white">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-label-md text-label-md font-bold uppercase tracking-widest">Bundle Offer</span>
+</div>
+<p class="font-headline-md text-headline-md mb-4">Add 'Premium Support' for $199/yr</p>
+<button class="w-full py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-lg font-label-md transition-colors">Apply Bundle Discount</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions and effects
+        document.querySelectorAll('.ai-glow').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                el.style.setProperty('--x', `${x}px`);
+                el.style.setProperty('--y', `${y}px`);
+            });
+        });
+
+        // Simple button active state visual feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.classList.add('scale-95');
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.classList.remove('scale-95');
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

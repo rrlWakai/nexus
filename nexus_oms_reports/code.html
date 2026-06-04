@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.03);
+        }
+        .ml-insight-border {
+            position: relative;
+        }
+        .ml-insight-border::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(to right, #0066cc, #aac7ff);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#aac7ff",
+                    "on-primary-fixed": "#001b3e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#1a1b1f",
+                    "inverse-primary": "#aac7ff",
+                    "ink-secondary": "#424245",
+                    "success": "#34C759",
+                    "secondary-fixed-dim": "#c7c6cb",
+                    "surface-container-high": "#e8e8ea",
+                    "surface-container-low": "#f3f3f5",
+                    "glass-fill": "rgba(255, 255, 255, 0.72)",
+                    "secondary-fixed": "#e3e2e7",
+                    "on-error-container": "#93000a",
+                    "secondary": "#5e5e63",
+                    "surface-bright": "#f9f9fb",
+                    "on-error": "#ffffff",
+                    "surface-secondary": "#F2F2F7",
+                    "outline-variant": "#c1c6d5",
+                    "surface": "#f9f9fb",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#005cba",
+                    "surface-container-highest": "#e2e2e4",
+                    "secondary-container": "#e0dfe4",
+                    "on-primary-fixed-variant": "#00458e",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d9dadc",
+                    "on-surface-variant": "#414753",
+                    "inverse-on-surface": "#f0f0f2",
+                    "on-background": "#1a1c1d",
+                    "primary": "#004e9f",
+                    "tertiary-container": "#af4900",
+                    "warning": "#FF9F0C",
+                    "on-tertiary-fixed": "#341100",
+                    "on-secondary-container": "#626267",
+                    "on-tertiary-fixed-variant": "#793000",
+                    "on-tertiary": "#ffffff",
+                    "system-background": "#FFFFFF",
+                    "background": "#f9f9fb",
+                    "surface-container": "#eeeef0",
+                    "on-tertiary-container": "#ffe3d6",
+                    "primary-container": "#0066cc",
+                    "ink-primary": "#1D1D1F",
+                    "surface-variant": "#e2e2e4",
+                    "on-surface": "#1a1c1d",
+                    "error": "#FF3B30",
+                    "on-secondary-fixed-variant": "#46464b",
+                    "tertiary-fixed-dim": "#ffb692",
+                    "primary-fixed": "#d7e3ff",
+                    "tertiary": "#883700",
+                    "outline": "#727784",
+                    "on-primary-container": "#dfe8ff",
+                    "inverse-surface": "#2f3132",
+                    "tertiary-fixed": "#ffdbcb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "48px",
+                    "container-max": "1440px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-xl-mobile": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["15px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-xl-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["17px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.03em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- SideNavBar -->
+<aside class="h-screen w-72 flex flex-col fixed left-0 top-0 bg-surface-container-low dark:bg-inverse-surface shadow-sm z-50">
+<div class="flex flex-col h-full py-base gap-2">
+<div class="px-6 py-8">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Nexus OMS</div>
+<div class="text-label-sm font-label-sm text-outline tracking-widest uppercase mt-1">Enterprise Intelligence</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center px-4 py-3 gap-3 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-body-md text-body-md font-medium">Orders</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md font-medium">Customers</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md font-medium">Products</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-md text-body-md font-medium">Analytics &amp; ML</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-body-md text-body-md font-medium">Staff</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 rounded-xl text-primary dark:text-inverse-primary font-semibold border-r-2 border-primary bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md font-medium">Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full py-4 bg-primary text-on-primary rounded-xl font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform duration-200">
+<span class="material-symbols-outlined">add_circle</span>
+                    New Order
+                </button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-72 min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-18rem)] h-16 z-40 bg-glass-fill backdrop-blur-3xl border-b border-outline-variant/10 flex justify-between items-center px-gutter">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-md focus:ring-2 focus:ring-primary/20" placeholder="Search reports, metrics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden lg:block">
+<div class="text-label-md font-label-md text-on-surface font-semibold">Admin User</div>
+<div class="text-label-sm font-label-sm text-outline">System Director</div>
+</div>
+<img alt="Administrator Profile" class="w-10 h-10 rounded-full border-2 border-primary/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhs3GCxDeeAdAmTgHSCA9DZGmy3I4rbUQV2VQcwXBY6UUmJUbAB8f67VJaxiiKkISDN3ZhrxgxHaI2bX2GZ4DEw-o70-DRV3i3vV0ZoXWNH2KNqPub5F-JfIiZezQ_6VV3CZoBjry5kYfPuGpPC7mMvaDUQ0arIjkWfVdeBSYMq12ODKMQk1q6Y4Vydo5nTh-0xRooRcIZALLVXh0s-vJxhunIMKzskL1wVT3mZathOYrQ8ulKfR_XxLeRUXDphykQoSzuxunT5_Y"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="pt-24 px-gutter pb-12 max-w-container-max mx-auto">
+<!-- Page Header & Controls -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-1">Reports Central</h1>
+<p class="text-body-md text-on-surface-variant">Analyze enterprise performance and export executive summaries.</p>
+</div>
+<div class="flex items-center gap-3 bg-white p-2 rounded-2xl shadow-sm border border-outline-variant/10">
+<div class="flex items-center px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary mr-2">calendar_today</span>
+<span class="text-label-md font-label-md text-on-surface">Oct 01, 2023 - Oct 31, 2023</span>
+</div>
+<button class="p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Summary Cards Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+<div class="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-success font-semibold text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                            +12.5%
+                        </span>
+</div>
+<div>
+<div class="text-label-md font-label-md text-outline uppercase tracking-wider">Total Revenue</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mt-1">$2,482,900.00</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-tertiary-fixed text-tertiary rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined">inventory</span>
+</div>
+<span class="text-error font-semibold text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+                            -2.1%
+                        </span>
+</div>
+<div>
+<div class="text-label-md font-label-md text-outline uppercase tracking-wider">Inventory Value</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mt-1">$1,120,450.00</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px] ml-insight-border">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-primary-container text-on-primary-container rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<span class="text-primary font-semibold text-label-md">AI Optimal</span>
+</div>
+<div>
+<div class="text-label-md font-label-md text-outline uppercase tracking-wider">Efficiency Score</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mt-1">94.8%</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-secondary-container text-on-secondary-container rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined">shopping_cart_checkout</span>
+</div>
+<span class="text-success font-semibold text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                            +5.4%
+                        </span>
+</div>
+<div>
+<div class="text-label-md font-label-md text-outline uppercase tracking-wider">Orders Fulfilled</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mt-1">18,542</div>
+</div>
+</div>
+</div>
+<!-- Report Modules Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Reporting Categories -->
+<div class="lg:col-span-2 space-y-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Available Modules</h3>
+<!-- Report Card: Financials -->
+<div class="glass-card p-6 rounded-3xl flex items-center gap-6 group hover:translate-y-[-4px] transition-all duration-300">
+<div class="w-20 h-20 rounded-2xl overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="A macro photography shot of modern architectural blueprints with high-contrast shadows and clean lines. The lighting is cold and clinical, evoking a sense of corporate precision. The color scheme is dominated by sharp whites and deep indigo blues, fitting a professional financial intelligence theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXLbyeqqxdGMbBRsSYACEKTPiuUGWDzaJgGzopOtZgRSAWUiqwkk8DKEGgIfXcsSHMV1AxX85VCiP17UcMScM6sOoiyFDYIv5XNs6_bmaDHGOzpyKhyNyiCSLIwrJyjf8xAui5HCAhOtdpN5mZBYG2QqIB3g1x2QziOSLw8GzpjaldjnpQRYUm05aJ7TDbeSv4odUfshSbZJbl-XVM12YhYgy-NvUVQricsFGaG9paeGLe6Y59MOuXi8zet0ZaVsHVKFnQW1NZ59s"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-headline-md text-headline-md">Executive Financial Summary</h4>
+<p class="text-body-md text-on-surface-variant mt-1">Comprehensive P&amp;L, Cash Flow, and Tax liability reporting.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-secondary text-primary rounded-xl font-semibold text-label-md hover:bg-primary/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                                        PDF
+                                    </button>
+<button class="px-4 py-2 bg-surface-secondary text-primary rounded-xl font-semibold text-label-md hover:bg-primary/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">table_chart</span>
+                                        CSV
+                                    </button>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-4 text-label-sm font-label-sm text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">history</span> Last generated: 2 hours ago</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">file_open</span> 4.2 MB</span>
+</div>
+</div>
+</div>
+<!-- Report Card: Inventory -->
+<div class="glass-card p-6 rounded-3xl flex items-center gap-6 group hover:translate-y-[-4px] transition-all duration-300">
+<div class="w-20 h-20 rounded-2xl overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="A wide-angle artistic view of a massive, technologically advanced warehouse interior. Symmetrical rows of shelving disappear into a soft-focus background. The atmosphere is bright and airy with natural light filtering through high windows, creating a clean, high-end minimalist aesthetic with subtle blue and grey tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhwQaSmUj608YuwORJIix6dSVdaiowZmOANq5ztLmV_WKTlIg_yzjSqxuExsKSRB8pc_0rGBHwzpxagceKMwfhligxDgq31t3EkMIylFarDkggrUXrDdzzU2bd1Tj9rOHfYYBXvtCh-8zSmEd_w40iqJoZO3A-AnnAFtnn1l-Dj7HC1NiSzqOWJUqUdmrlntj-8ZUxHFs0sKqVi0bFH5B9nThwzbuCMDkFqo_60s-DMIDvF1mrq2tgxy6fM1AzJA3iCRAFTkJlS9w"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-headline-md text-headline-md">Inventory Health &amp; Turnover</h4>
+<p class="text-body-md text-on-surface-variant mt-1">Stock levels, aging reports, and supply chain bottlenecks.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-secondary text-primary rounded-xl font-semibold text-label-md hover:bg-primary/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                                        PDF
+                                    </button>
+<button class="px-4 py-2 bg-surface-secondary text-primary rounded-xl font-semibold text-label-md hover:bg-primary/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">table_chart</span>
+                                        CSV
+                                    </button>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-4 text-label-sm font-label-sm text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">history</span> Last generated: Yesterday</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">file_open</span> 12.8 MB</span>
+</div>
+</div>
+</div>
+<!-- Report Card: Sales -->
+<div class="glass-card p-6 rounded-3xl flex items-center gap-6 group hover:translate-y-[-4px] transition-all duration-300">
+<div class="w-20 h-20 rounded-2xl overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="An elegant, minimalist digital visualization of a growth chart. Glowing soft lines in primary blue and teal curve upwards across a clean white background with a subtle grid. The mood is optimistic and professional, representing high-performance sales data in a premium enterprise environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEJHGgVX7c42opghEzO4_4UfJi2f9MZeIyKjlIVbyBkw9vHNPq5_hKGlbTXfrQwcrMBtqtWWpZRSswd932RENl-kYNt00Okvj93lSTFkVAZzb2L8sW6t0GJiz5zj2dukdDyBMrwjJBQGf-EbqgOMblf_Bo1LG04mjJK5yMBH8NLx2XRTgyZkUHT_ExH0q6ojG19sm21n4bDn0OgVbOVo6QptvoBUZKzta7LCATKWBWSRsqY4sY2nw9KP-FxDF_vSsTKvalmi7NtD8"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-headline-md text-headline-md">Global Sales Performance</h4>
+<p class="text-body-md text-on-surface-variant mt-1">Regional breakdowns, top SKU performance, and agent metrics.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-secondary text-primary rounded-xl font-semibold text-label-md hover:bg-primary/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                                        PDF
+                                    </button>
+<button class="px-4 py-2 bg-surface-secondary text-primary rounded-xl font-semibold text-label-md hover:bg-primary/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">table_chart</span>
+                                        CSV
+                                    </button>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-4 text-label-sm font-label-sm text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">history</span> Last generated: 1 hour ago</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">file_open</span> 8.5 MB</span>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Performance Side Panel -->
+<div class="space-y-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Intelligence Hub</h3>
+<div class="glass-card rounded-3xl overflow-hidden ml-insight-border">
+<div class="p-6 bg-primary-container text-on-primary-container">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="text-label-md font-label-md font-bold uppercase tracking-widest">Nexus AI Forecast</span>
+</div>
+<h4 class="font-headline-md text-headline-md">Q4 Demand Prediction</h4>
+</div>
+<div class="p-6 space-y-4">
+<p class="text-body-md text-on-surface-variant">The AI engine predicts a <span class="text-primary font-bold">14% surge</span> in consumer electronics for late November.</p>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-label-md font-label-md">
+<span class="text-on-surface-variant">Confidence Level</span>
+<span class="text-primary">92%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 92%"></div>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-on-primary rounded-xl font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span>
+                                Generate AI Report
+                            </button>
+</div>
+</div>
+<div class="glass-card p-6 rounded-3xl">
+<h4 class="font-headline-md text-headline-md mb-4">Quick Exports</h4>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-secondary flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<div class="text-label-md font-label-md text-on-surface">Daily Pulse</div>
+<div class="text-label-sm font-label-sm text-outline">Automated 8:00 AM</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-secondary flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">assignment_ind</span>
+</div>
+<div>
+<div class="text-label-md font-label-md text-on-surface">Staff Productivity</div>
+<div class="text-label-sm font-label-sm text-outline">Weekly Cycle</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Exports Table Section -->
+<div class="mt-12 glass-card rounded-3xl overflow-hidden">
+<div class="px-6 py-5 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Recent Generated Reports</h3>
+<button class="text-primary font-semibold text-label-md hover:underline">View History</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 text-label-sm font-label-sm text-outline uppercase tracking-widest">Report Name</th>
+<th class="px-6 py-4 text-label-sm font-label-sm text-outline uppercase tracking-widest">Format</th>
+<th class="px-6 py-4 text-label-sm font-label-sm text-outline uppercase tracking-widest">Generated By</th>
+<th class="px-6 py-4 text-label-sm font-label-sm text-outline uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 text-label-sm font-label-sm text-outline uppercase tracking-widest">Size</th>
+<th class="px-6 py-4 text-label-sm font-label-sm text-outline uppercase tracking-widest text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4 font-label-md text-on-surface">October_Monthly_Audit.pdf</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">PDF</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Admin User</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-success/10 text-success rounded-full text-label-sm font-semibold">Completed</span>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">5.4 MB</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4 font-label-md text-on-surface">Region_East_Sales_Q3.csv</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">CSV</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Systems_Bot</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-success/10 text-success rounded-full text-label-sm font-semibold">Completed</span>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">1.2 MB</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4 font-label-md text-on-surface">Global_Inventory_Full.csv</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">CSV</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Admin User</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-warning/10 text-warning rounded-full text-label-sm font-semibold">Processing</span>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">--</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline cursor-not-allowed p-2 rounded-lg">
+<span class="material-symbols-outlined">hourglass_empty</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interaction for sidebar tabs
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('mousedown', () => {
+                link.classList.add('scale-[0.98]');
+            });
+            link.addEventListener('mouseup', () => {
+                link.classList.remove('scale-[0.98]');
+            });
+            link.addEventListener('mouseleave', () => {
+                link.classList.remove('scale-[0.98]');
+            });
+        });
+
+        // Hover effect for summary cards
+        const glassCards = document.querySelectorAll('.glass-card');
+        glassCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+                card.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

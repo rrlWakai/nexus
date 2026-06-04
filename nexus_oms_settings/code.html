@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nexus OMS - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#aac7ff",
+                    "on-primary-fixed": "#001b3e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#1a1b1f",
+                    "inverse-primary": "#aac7ff",
+                    "ink-secondary": "#424245",
+                    "success": "#34C759",
+                    "secondary-fixed-dim": "#c7c6cb",
+                    "surface-container-high": "#e8e8ea",
+                    "surface-container-low": "#f3f3f5",
+                    "glass-fill": "rgba(255, 255, 255, 0.72)",
+                    "secondary-fixed": "#e3e2e7",
+                    "on-error-container": "#93000a",
+                    "secondary": "#5e5e63",
+                    "surface-bright": "#f9f9fb",
+                    "on-error": "#ffffff",
+                    "surface-secondary": "#F2F2F7",
+                    "outline-variant": "#c1c6d5",
+                    "surface": "#f9f9fb",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#005cba",
+                    "surface-container-highest": "#e2e2e4",
+                    "secondary-container": "#e0dfe4",
+                    "on-primary-fixed-variant": "#00458e",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d9dadc",
+                    "on-surface-variant": "#414753",
+                    "inverse-on-surface": "#f0f0f2",
+                    "on-background": "#1a1c1d",
+                    "primary": "#004e9f",
+                    "tertiary-container": "#af4900",
+                    "warning": "#FF9F0C",
+                    "on-tertiary-fixed": "#341100",
+                    "on-secondary-container": "#626267",
+                    "on-tertiary-fixed-variant": "#793000",
+                    "on-tertiary": "#ffffff",
+                    "system-background": "#FFFFFF",
+                    "background": "#f9f9fb",
+                    "surface-container": "#eeeef0",
+                    "on-tertiary-container": "#ffe3d6",
+                    "primary-container": "#0066cc",
+                    "ink-primary": "#1D1D1F",
+                    "surface-variant": "#e2e2e4",
+                    "on-surface": "#1a1c1d",
+                    "error": "#FF3B30",
+                    "on-secondary-fixed-variant": "#46464b",
+                    "tertiary-fixed-dim": "#ffb692",
+                    "primary-fixed": "#d7e3ff",
+                    "tertiary": "#883700",
+                    "outline": "#727784",
+                    "on-primary-container": "#dfe8ff",
+                    "inverse-surface": "#2f3132",
+                    "tertiary-fixed": "#ffdbcb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "48px",
+                    "container-max": "1440px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-xl-mobile": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["15px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-xl-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["17px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.03em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { -webkit-font-smoothing: antialiased; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0px 10px 40px rgba(0,0,0,0.03);
+        }
+        .apple-toggle {
+            appearance: none;
+            width: 42px;
+            height: 24px;
+            background: #e9e9ea;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .apple-toggle:checked { background: #0066CC; }
+        .apple-toggle::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .apple-toggle:checked::before { transform: translateX(18px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e2e4; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-hidden h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-72 flex flex-col fixed left-0 top-0 bg-surface-container-low z-50 shadow-sm border-r border-outline-variant/10">
+<div class="p-8 flex flex-col gap-1">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Nexus OMS</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Enterprise Intelligence</p>
+</div>
+<nav class="flex flex-col h-full py-4 gap-1 px-4 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label-md text-label-md">Analytics &amp; ML</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-md text-label-md">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-primary font-semibold border-r-2 border-primary bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="p-6 mt-auto">
+<button class="w-full bg-primary py-3 rounded-xl text-white font-label-md text-label-md shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:opacity-90 transition-opacity active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                New Order
+            </button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-72 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="h-16 flex justify-between items-center px-10 glass-fill backdrop-blur-3xl z-40 border-b border-outline-variant/10">
+<div class="flex items-center gap-8">
+<div class="relative w-64 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-label-md focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all" placeholder="Search configuration..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/20">
+<div class="text-right">
+<p class="font-label-md text-label-md font-semibold text-on-surface">Admin User</p>
+<p class="text-[11px] text-on-surface-variant">System Administrator</p>
+</div>
+<img alt="Administrator Profile" class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZTRiTTbGkrkhPB-AvwhLYbzBMQteT3kYK8nhjmbf9FQEfC5hOL6_AV8xI-Ou9gTXfNDV_82vU1oJCXUu-_dxZXQFsoR3naJDHOj1Sx8kUIB93pV2Jai6OpLawXzBH6RJFXSZQlEqYhrdXjfsVkAqtOzeaEZdVmC5m9tFjlThIvjAYWUXBTBpNwF4a35-1GznYm8VXMhDg0PI1lAR_S_y0tLCZgvBXF4Ocy-zRG0AZMKRcKAkCz14WmneNMRKNOagbo2LBJI5t2vg"/>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<section class="flex-1 overflow-y-auto p-12 bg-surface custom-scrollbar">
+<div class="max-w-[900px] mx-auto">
+<header class="mb-12">
+<h2 class="font-headline-xl text-headline-xl mb-2">Platform Settings</h2>
+<p class="text-on-surface-variant font-body-md">Configure your enterprise workspace, security protocols, and integration endpoints.</p>
+</header>
+<div class="flex flex-col gap-10">
+<!-- Section: Profile -->
+<div class="glass-card rounded-[24px] p-8">
+<div class="flex items-center justify-between mb-8 pb-4 border-b border-outline-variant/10">
+<div>
+<h3 class="font-headline-md text-headline-md mb-1">Profile Management</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Manage personal information and system avatar.</p>
+</div>
+<button class="text-primary font-label-md text-label-md hover:underline">Edit details</button>
+</div>
+<div class="flex gap-10 items-start">
+<div class="relative group">
+<img alt="Profile Large" class="w-24 h-24 rounded-full object-cover ring-4 ring-primary/5 transition-transform group-hover:scale-105 duration-300" data-alt="A professional studio portrait of a modern office administrator with a clean-cut appearance. The lighting is bright and high-key, creating a professional and approachable mood. The background is a soft, blurred office interior with neutral tones of white and light gray, echoing a premium minimalist aesthetic. The image is crisp and high-resolution, suitable for a high-end corporate enterprise application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCExx6-XvDoTL18wTaKHTNkKzHQ-gi3p-u1mPLNHoTiszLOgW-o2DcQAYLp8H4J0a51tMMwYKzFNSUghDjJuXsveftmA_47lSqDt7Ym1LZyouzl8k5_mkj8jqQ8bW9g7kI0gL0NdT_fUjM83YvCxcv8AfXNZOgayYsLveTTA1x_LYjYL3-D2Xf3BlaJ7OCpt0bhM5XuR3BnuPSOu1xUHBjk_AOIe7TJpC911GphPSbt6BavVoutlU5IKmOscRAMNGsKI2ACcXrWo_k"/>
+<div class="absolute bottom-0 right-0 bg-primary text-white p-1.5 rounded-full shadow-lg border-2 border-white cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-x-8 gap-y-6">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Display Name</label>
+<p class="font-body-lg text-body-lg font-medium">Admin User</p>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Email Address</label>
+<p class="font-body-lg text-body-lg font-medium">admin@nexusoms.enterprise</p>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">System Role</label>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-success rounded-full"></span>
+<p class="font-body-lg text-body-lg font-medium">Super Administrator</p>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Timezone</label>
+<p class="font-body-lg text-body-lg font-medium">GMT -05:00 (EST)</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Security -->
+<div class="glass-card rounded-[24px] p-8">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="font-headline-md text-headline-md mb-1">Security &amp; Access</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Manage authentication layers and session persistence.</p>
+</div>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between py-4 group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined">key</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-medium">Two-Factor Authentication</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Add an extra layer of security to your account.</p>
+</div>
+</div>
+<input checked="" class="apple-toggle" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between py-4 group border-t border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined">fingerprint</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-medium">Biometric Login</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Use FaceID or TouchID on supported devices.</p>
+</div>
+</div>
+<input class="apple-toggle" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between py-4 group border-t border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-medium">Session Timeout</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Automatically logout after 30 minutes of inactivity.</p>
+</div>
+</div>
+<select class="bg-surface-secondary border-none rounded-lg text-label-md focus:ring-1 focus:ring-primary px-4 py-2">
+<option>15 Minutes</option>
+<option selected="">30 Minutes</option>
+<option>1 Hour</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Section: Notifications -->
+<div class="glass-card rounded-[24px] p-8">
+<h3 class="font-headline-md text-headline-md mb-6">Notification Preferences</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="p-6 bg-surface-secondary/50 rounded-2xl">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary">mail</span>
+<input checked="" class="apple-toggle" type="checkbox"/>
+</div>
+<p class="font-body-lg text-body-lg font-medium mb-1">Email Reports</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Daily digest of order fulfillment and inventory alerts.</p>
+</div>
+<div class="p-6 bg-surface-secondary/50 rounded-2xl">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary">smartphone</span>
+<input checked="" class="apple-toggle" type="checkbox"/>
+</div>
+<p class="font-body-lg text-body-lg font-medium mb-1">Push Notifications</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Instant updates for high-priority system alerts.</p>
+</div>
+</div>
+</div>
+<!-- Section: Billing -->
+<div class="glass-card rounded-[24px] p-8">
+<div class="flex items-center justify-between mb-8 pb-4 border-b border-outline-variant/10">
+<div>
+<h3 class="font-headline-md text-headline-md mb-1">Billing &amp; Subscription</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Your current plan is <span class="text-primary font-semibold">Enterprise Elite</span>.</p>
+</div>
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider">Active</span>
+</div>
+<div class="flex items-center gap-6 p-6 bg-primary-container/10 border border-primary-container/20 rounded-2xl">
+<div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-[32px]">credit_card</span>
+</div>
+<div class="flex-1">
+<p class="font-body-lg text-body-lg font-semibold">Mastercard ending in 8821</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Next billing date: Oct 24, 2024 • $1,200.00</p>
+</div>
+<button class="bg-white text-primary px-6 py-2 rounded-full font-label-md text-label-md shadow-sm border border-outline-variant/20 hover:bg-primary hover:text-white transition-all">Update</button>
+</div>
+</div>
+<!-- Section: API & Integrations -->
+<div class="glass-card rounded-[24px] p-8 mb-20">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="font-headline-md text-headline-md mb-1">API &amp; Integrations</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Interface with third-party ERP and logistics providers.</p>
+</div>
+<button class="bg-primary text-white px-6 py-2 rounded-full font-label-md text-label-md hover:shadow-lg hover:shadow-primary/20 transition-all">Generate Token</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 rounded-xl hover:bg-surface-secondary transition-colors cursor-pointer border border-transparent hover:border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-[#000000] rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">webhook</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-medium">Standard Logistics Webhook</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Active • Last pinged 2 mins ago</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-4 rounded-xl hover:bg-surface-secondary transition-colors cursor-pointer border border-transparent hover:border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-[#4A154B] rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">chat</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-medium">Slack Notifications</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Disconnected</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<script>
+        // Smooth scale interactions for active states
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.classList.add('scale-[0.98]'));
+            btn.addEventListener('mouseup', () => btn.classList.remove('scale-[0.98]'));
+        });
+
+        // Toggle logic visual feedback
+        document.querySelectorAll('.apple-toggle').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const parent = this.closest('.glass-card');
+                if (this.checked) {
+                    console.log('Setting enabled');
+                }
+            });
+        });
+    </script>
+</body></html>
